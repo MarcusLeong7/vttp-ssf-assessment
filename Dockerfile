@@ -21,15 +21,16 @@ ARG WORK_DIR=/app
 
 WORKDIR ${WORK_DIR}
 
-COPY --from=builder /compiledir/target/noticeboardapp-0.0.1-SNAPSHOT.jar noticeApp.jar
+COPY --from=builder /compiledir/target/noticeboard-0.0.1-SNAPSHOT.jar noticeboardApp.jar
 
 ENV PORT=8080
-ENV SPRING_DATA_REDIS_HOST=localhost SPRING_DATA_REDIS_PORT=6379
-ENV SPRING_DATA_REDIS_USERNAME="" SPRING_DATA_REDIS_PASSWORD=""
+
+ENV NOTICEBOARD_DB_HOST=localhost NOTICEBOARD_DB_PORT=6379
+ENV NOTICEBOARD_DB_USERNAME="" NOTICEBOARD_DB_PASSWORD=""
 
 EXPOSE ${PORT}
 
 HEALTHCHECK --interval=60s --timeout=5s --start-period=120s --retries=3 \
    CMD curl -s -f http://localhost:${PORT}/health || exit 1
 
-ENTRYPOINT SERVER_PORT=${PORT} java -jar noticeApp.jar
+ENTRYPOINT SERVER_PORT=${PORT} java -jar noticeboardApp.jar

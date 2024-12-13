@@ -31,8 +31,8 @@ public class NoticeRepository {
 	// redis-cli commands
 	// Retreive outer hash key:
 	// hgetall Notices to get field key-value pair within Hash
-	// To retrieve JsonObj.toString() each individual id:
-	// hget Notices {id}
+	// To retrieve JsonObj.toString() for each individual id:
+	// hget Notices {id} field values: id & timestamp
 	// To delete individual id:
 	// hdl Notices {id}
 	public void insertNotices(JsonObject obj) {
