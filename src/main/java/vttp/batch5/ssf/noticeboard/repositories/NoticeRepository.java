@@ -28,13 +28,16 @@ public class NoticeRepository {
 	 *
 	 */
 
+	// redis-cli commands
+	// Retreive outer hash key:
 	// hgetall Notices to get field key-value pair within Hash
-	// hget "Notices" {id/title/poster/postdate/categories/text} to access each field value
+	// To retrieve JsonObj.toString() each individual id:
+	// hget Notices {id}
+	// To delete individual id:
+	// hdl Notices {id}
 	public void insertNotices(JsonObject obj) {
-		JsonObject jsonObj = Json.createObjectBuilder()
-				.add("NoticeId", obj.getString("id"))
-				.build();
-		template.opsForHash().put("Notices", jsonObj ,jsonObj.toString());
+		String id = obj.getString("id");
+		template.opsForHash().put("Notices", id ,obj.toString());
 	}
 
 
