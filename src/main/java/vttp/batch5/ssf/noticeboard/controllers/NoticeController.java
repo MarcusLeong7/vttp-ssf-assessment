@@ -1,25 +1,17 @@
 package vttp.batch5.ssf.noticeboard.controllers;
 
-import jakarta.json.Json;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonReader;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.servlet.ModelAndView;
 import vttp.batch5.ssf.noticeboard.models.Notice;
 import vttp.batch5.ssf.noticeboard.services.NoticeService;
-import vttp.batch5.ssf.noticeboard.utils.DateConvertor;
 
-import java.io.StringReader;
-import java.util.Date;
+import java.util.Random;
 
 // Use this class to write your request handlers
 @Controller
@@ -61,6 +53,36 @@ public class NoticeController {
         }
 
     }
+
+    @GetMapping("/status")
+    public ModelAndView getHealth() {
+        ModelAndView mav = new ModelAndView();
+
+        try {
+            checkHealth();
+
+            mav.setViewName("healthy");
+            mav.setStatus(HttpStatusCode.valueOf(200));
+        } catch (Exception e) {
+            mav.setViewName("unhealthy");
+            mav.setStatus(HttpStatusCode.valueOf(503));
+        }
+        return mav;
+    }
+
+    private void checkHealth() throws Exception {
+        // get random number between 0 and 10
+        Random random = new Random();
+        Integer value = random.nextInt(0, 10);
+        // if random number is between 0 and 5
+        // throw an exception
+        // means there is an exception/error (simulating exception)
+        if (value <= 5) {
+            throw new Exception("Simulating error..." + value.toString());
+        }
+        // else do nothing
+    }
+
 
 
 }
