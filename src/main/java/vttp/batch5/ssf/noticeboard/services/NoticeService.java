@@ -63,6 +63,7 @@ public class NoticeService {
             JsonReader jsonReader = Json.createReader(new StringReader(payload));
             JsonObject jsonObj = jsonReader.readObject();
             String id = jsonObj.getString("id");
+            noticeRepo.insertNotices(jsonObj);
             return id;
         }
 
@@ -71,10 +72,7 @@ public class NoticeService {
         JsonObject jsonObj = reader.readObject();
         String errormessage = jsonObj.getString("message");
         throw new RuntimeException(errormessage);
-
     }
 
-   /* public void saveNotice(Notice notice) {
-        noticeRepo.insertNotices(notice);
-    }*/
+
 }

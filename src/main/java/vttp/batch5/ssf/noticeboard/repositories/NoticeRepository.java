@@ -28,12 +28,14 @@ public class NoticeRepository {
 	 *
 	 */
 
-	/*// hgetall Notices to get field key-value pair within Hash
+	// hgetall Notices to get field key-value pair within Hash
 	// hget "Notices" {id/title/poster/postdate/categories/text} to access each field value
-	public void insertNotices(JsonObject jsonObj) {
-
-
-	}*/
+	public void insertNotices(JsonObject obj) {
+		JsonObject jsonObj = Json.createObjectBuilder()
+				.add("NoticeId", obj.getString("id"))
+				.build();
+		template.opsForHash().put("Notices", jsonObj ,jsonObj.toString());
+	}
 
 
 }
